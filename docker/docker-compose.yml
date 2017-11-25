@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+    htf_postgres:
+        image: postgres:9.1
+        ports:
+          - "5432:5432"
+        volumes:
+          - ./docker_data/postgres/data:/var/lib/postgresql/data
+        container_name: htf_postgres
+        environment:
+          - POSTGRES_DB=htf
+          - POSTGRES_USER=htf
+          - POSTGRES_PASSWORD=htf

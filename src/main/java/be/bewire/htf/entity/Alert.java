@@ -1,5 +1,6 @@
 package be.bewire.htf.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,6 +19,9 @@ public class Alert {
     private Double latitude;
     private Double longitude;
     private byte[] image;
+
+    @Column(name = "user_id")
+    private Integer userId;
 
     public int getId() {
         return id;
@@ -57,5 +61,13 @@ public class Alert {
 
     public void setImage(final byte[] image) {
         this.image = image;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(final Integer userId) {
+        this.userId = userId;
     }
 }

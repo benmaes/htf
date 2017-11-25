@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
 <body>
-<h1>Hello ${name}</h1>
+<h1>Welcome</h1>
 
-<p>${message}</p>
-
-<a href="/alert">Send alert</a>
+<a href="/login">Login</a>
+<a href="/register">Register</a>
 </body>
 </html>

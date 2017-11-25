@@ -10,4 +10,5 @@ public interface UserService {
 
     User getByName(String name);
 
+    User save(User user);
 }

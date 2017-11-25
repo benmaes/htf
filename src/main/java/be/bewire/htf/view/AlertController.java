@@ -1,8 +1,11 @@
 package be.bewire.htf.view;
 
 import be.bewire.htf.entity.Alert;
+import be.bewire.htf.entity.User;
 import be.bewire.htf.service.AlertService;
+import be.bewire.htf.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +25,9 @@ public class AlertController {
     @Autowired
     private AlertService alertService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/alert")
     public String alert() {
         return "alert";
@@ -31,25 +37,36 @@ public class AlertController {
     public String handleFileUpload(
         @RequestParam("file")
             MultipartFile file,
-        @RequestParam("latitude") Double latitude,
-        @RequestParam("longitude") Double longitude,
-        RedirectAttributes redirectAttributes) throws IOException {
+        @RequestParam("latitude")
+            Double latitude,
+        @RequestParam("longitude")
+            Double longitude, RedirectAttributes redirectAttributes)
+        throws IOException {
 
         Alert alert = new Alert();
         alert.setLatitude(latitude);
         alert.setLongitude(longitude);
         alert.setImage(file.getBytes());
 
+        User user = (User) SecurityContextHolder.getContext()
+            .getAuthentication().getPrincipal();
+        alert.setUserId(user.getId());
+        user.setLastLatitude(latitude);
+        user.setLastLongitude(longitude);
+
+        userService.save(user);
         alertService.save(alert);
 
         redirectAttributes.addFlashAttribute("message",
             "You successfully uploaded " + file.getOriginalFilename() + "!");
 
-        return "redirect:/";
+        return "redirect:/home";
     }
 
     @GetMapping("/alert/{id}")
-    public String getAlertById(@PathVariable("id") int id, Model model) {
+    public String getAlertById(
+        @PathVariable("id")
+            int id, Model model) {
         Alert alert = alertService.getById(id);
 
         BASE64Encoder base64Encoder = new BASE64Encoder();

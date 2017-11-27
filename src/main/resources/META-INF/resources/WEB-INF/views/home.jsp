@@ -29,11 +29,10 @@
     }
 
     setInterval(function () {
-        console.log("inside interval");
         getLocation();
         setTimeout(function() {
             window.location.href = '/user/update?latitude=' + latitude + '&longitude=' + longitude;
-        }, 5000);
+        }, 10000);
     }, 60 * 1000);
 </script>
 

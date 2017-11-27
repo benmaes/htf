@@ -70,7 +70,7 @@ public class AlertController {
 
         notificationService.notify(
             new Notification(String.format("New alert [%s]: %s", alert.getId(), alert.getMessage())),
-            user.getUsername());
+            "ben");
 
         return "redirect:/home";
     }

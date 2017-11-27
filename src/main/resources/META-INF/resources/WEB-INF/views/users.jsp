@@ -36,6 +36,10 @@
             });
         });
     }
+
+    setTimeout(function(){
+        window.location.reload(1);
+    }, 10000);
 </script>
 <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCnM6BINCXdYOy82I5t4WhhvOzcComBWU0&callback=initMap">

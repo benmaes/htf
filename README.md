@@ -1,8 +1,24 @@
 # Hack The Future - Java Track
 
 TODO's
--
-- User management (registratie + inloggen)
+
 - Show users on map (custom icons?)
-- notificaties van alerts
 - alert streaming
+
+create table gebruiker(
+    id INTEGER PRIMARY KEY ,
+    name TEXT,
+    last_latitude DECIMAL,
+    last_longitude DECIMAL,
+    username TEXT,
+    password TEXT);
+
+create table alert(
+    id INTEGER PRIMARY KEY ,
+    message TEXT,
+    latitude DECIMAL,
+    longitude DECIMAL,
+    image bytea,
+user_id INTEGER);
+
+create SEQUENCE hibernate_sequence;

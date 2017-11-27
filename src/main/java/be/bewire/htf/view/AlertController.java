@@ -2,7 +2,9 @@ package be.bewire.htf.view;
 
 import be.bewire.htf.entity.Alert;
 import be.bewire.htf.entity.User;
+import be.bewire.htf.notification.Notification;
 import be.bewire.htf.service.AlertService;
+import be.bewire.htf.service.NotificationService;
 import be.bewire.htf.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +30,9 @@ public class AlertController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @GetMapping("/alert")
     public String alert() {
         return "alert";
@@ -35,6 +40,8 @@ public class AlertController {
 
     @PostMapping("/alert")
     public String handleFileUpload(
+        @RequestParam("message")
+        String message,
         @RequestParam("file")
             MultipartFile file,
         @RequestParam("latitude")
@@ -44,6 +51,7 @@ public class AlertController {
         throws IOException {
 
         Alert alert = new Alert();
+        alert.setMessage(message);
         alert.setLatitude(latitude);
         alert.setLongitude(longitude);
         alert.setImage(file.getBytes());
@@ -55,10 +63,14 @@ public class AlertController {
         user.setLastLongitude(longitude);
 
         userService.save(user);
-        alertService.save(alert);
+        alert = alertService.save(alert);
 
         redirectAttributes.addFlashAttribute("message",
             "You successfully uploaded " + file.getOriginalFilename() + "!");
+
+        notificationService.notify(
+            new Notification(String.format("New alert [%s]: %s", alert.getId(), alert.getMessage())),
+            user.getUsername());
 
         return "redirect:/home";
     }

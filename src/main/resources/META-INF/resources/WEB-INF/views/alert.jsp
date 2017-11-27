@@ -5,10 +5,16 @@
 
 <form id='form' method="post" enctype="multipart/form-data"
     onsubmit="return getLocation()">
-    <input id='file' type="file" name="file" accept="image/*"/>
-    <input id="latitude" name="latitude" type="hidden"/>
-    <input id="longitude" name="longitude" type="hidden"/>
-    <input type="submit" value="Submit"/>
+    <fieldset>
+        <legend>Submit an alert</legend>
+        <label for="message">Message: </label>
+        <input id='message' type="text" name="message"/>
+        <label for="file">Image: </label>
+        <input id='file' type="file" name="file" accept="image/*"/>
+        <input id="latitude" name="latitude" type="hidden"/>
+        <input id="longitude" name="longitude" type="hidden"/>
+        <input type="submit" value="Submit"/>
+    </fieldset>
 </form>
 
 <script>

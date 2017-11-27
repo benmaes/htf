@@ -10,6 +10,7 @@
 </head>
 <body>
 <h1>Alert ${alert.id}</h1>
+<p>${alert.message}</p>
 <div id="map"></div>
 <img src="${image}"/>
 <script>
